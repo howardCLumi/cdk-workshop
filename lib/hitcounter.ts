@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
+import { EncryptionOption } from 'aws-cdk-lib/aws-stepfunctions-tasks';
 
 export interface HitCounterProps {
     /** the function for which we want to count url hits */
@@ -21,7 +22,8 @@ export class HitCounter extends Construct {
 
         //TODO
         const table = new dynamodb.Table(this, 'Hits', {
-            partitionKey: { name: 'path', type: dynamodb.AttributeType.STRING }
+            partitionKey: { name: 'path', type: dynamodb.AttributeType.STRING },
+            encryption: dynamodb.TableEncryption.AWS_MANAGED
         });
         this.table = table;
 
