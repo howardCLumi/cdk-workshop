@@ -1,11 +1,11 @@
 const {DynamoDB, Lambda} = require('aws-sdk');
 
-exports.handler = async function(event) {
-    console.log("request:", JSON.stringify(event, undefined, 2));
+// create AWS SDK clients
+const dynamo = new DynamoDB();
+const lambda = new Lambda();
 
-    // create AWS SDK clients
-    const dynamo = new DynamoDB();
-    const lambda = new Lambda();
+exports.registerHit = async function(event) {
+    console.log("request:", JSON.stringify(event, undefined, 2));
 
     //update dynamo entry for "path" with hits++
     await dynamo.updateItem({
@@ -30,7 +30,7 @@ exports.handler = async function(event) {
 /**
  * what is lambda handler
  * what is sdk clients
- * dynamo is database. so we are creating a database resource (bucket?) with line 7. then we add entries with the function on line 11.
+ * dynamo is database. so we are creating a database resource with line 7. then we add entries with the function on line 11.
  * what does calling downstream function mean (upstream too)
  * 
  */
